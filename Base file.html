@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Core | Modern Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f5f7fa; line-height: 1.6; }
+
+        /* Navigation */
+        nav {
+            background: #fff; padding: 1rem 5%; position: fixed; width: 100%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.8rem; color: #2A5C82; font-weight: 800; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: #333; text-decoration: none; font-weight: 500; transition: all 0.3s; }
+        .nav-links a:hover { color: #2A5C82; transform: translateY(-2px); }
+        .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; }
+
+        /* Auth Button */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .login-btn {
+            color: #2A5C82;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: rgba(42, 92, 130, 0.1);
+        }
+
+        .signup-btn {
+            background: #2A5C82;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .signup-btn:hover {
+            background: #3A86B8;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 5% 6rem; background: linear-gradient(135deg, #2A5C82 0%, #3A86B8 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="%23ffffff20" fill="none" stroke-width="2"/></svg>');
+            opacity: 0.1;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 700; }
+        .hero p { font-size: 1.3rem; margin-bottom: 2.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .btn-primary {
+            background: #fff; color: #2A5C82; border: none; padding: 1.2rem 2.5rem;
+            border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 1.2rem;
+            transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+        /* Courses Section */
+        .courses { padding: 5rem 5%; }
+        .section-title { text-align: center; color: #2A5C82; font-size: 2.5rem; margin-bottom: 3rem; }
+        .course-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem; margin-top: 2rem;
+        }
+        .course-card {
+            background: white; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08); transition: transform 0.3s;
+            position: relative;
+        }
+        .course-card:hover { transform: translateY(-10px); }
+        .course-image { height: 200px; background: #f0f0f0; position: relative; overflow: hidden; }
+        .course-image img { width: 100%; height: 100%; object-fit: cover; }
+        .course-content { padding: 1.5rem; }
+        .course-category {
+            display: inline-block; background: #2A5C82; color: white;
+            padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem; margin-bottom: 1rem;
+        }
+        .course-meta {
+            display: flex; justify-content: space-between;
+            color: #666; font-size: 0.9rem; margin-top: 1rem;
+        }
+        .rating { color: #ffc107; }
+
+        /* Features Section */
+        .features { padding: 5rem 5%; background: #fff; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; }
+        .feature-card { text-align: center; padding: 2rem; }
+        .feature-icon {
+            font-size: 2.5rem; color: #2A5C82; margin-bottom: 1.5rem;
+            background: #e3f2fd; width: 80px; height: 80px; line-height: 80px;
+            border-radius: 50%; margin-left: auto; margin-right: auto;
+        }
+
+        /* Testimonials */
+        .testimonials { padding: 5rem 5%; background: #f8f9fa; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .testimonial-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            perspective: 1000px;
+        }
+        .testimonial-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .testimonial-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card-front {
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        .card-back {
+            background: #2c3e50;
+            color: white;
+            transform: rotateY(180deg);
+            border-radius: 10px;
+        }
+
+        /* Blog Section */
+        .blog { padding: 5rem 5%; background: #f8f9fa; }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .blog-card {
+            background: white; padding: 1.5rem; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s;
+        }
+        .blog-card:hover { transform: translateY(-5px); }
+        .blog-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+        .blog-category {
+            display: inline-block; background: #007bff; color: white;
+            padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; margin-bottom: 1rem;
+        }
+        .blog-meta {
+            display: flex; justify-content: space-between;
+            color: #777; font-size: 0.9rem; margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2A5C82; color: white; padding: 5rem 5% 3rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;
+        }
+        .footer-section h3 { margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-section ul li a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .newsletter input {
+            padding: 0.8rem; border-radius: 25px 0 0 25px; border: none;
+            width: 70%; margin-top: 1rem;
+        }
+        .newsletter button {
+            padding: 0.8rem 1.5rem; border-radius: 0 25px 25px 0; border: none;
+            background: #3A86B8; color: white; cursor: pointer; transition: all 0.3s;
+        }
+        .newsletter button:hover { background: #2c6a8f; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .social-links a { color: white; font-size: 1.5rem; transition: all 0.3s; }
+        .social-links a:hover { color: #aad4f5; transform: translateY(-3px); }
+
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 992px) {
+            .auth-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0;
+                width: 100%; background: white; padding: 1rem; text-align: center;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            .nav-links.active { display: flex; flex-direction: column; gap: 1.5rem; }
+            .menu-toggle { display: block; }
+            .hero h1 { font-size: 2.5rem; }
+
+            .auth-buttons {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                display: none;
+                flex-direction: column;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .auth-buttons.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Knowledge Core</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#courses">Courses</a>
+            <a href="#features">Features</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#blog">Blog</a>
+            <a href="http://localhost:63342/pythonProject1/support%20page.html?_ijt=j8bf0kfv7jqm1so1fgurs5d84q">Support</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="http://localhost:63342/pythonProject1/Login%20Page.html?_ijt=bi8b5p34ruid1lac4k3st8o36p" class="login-btn">Sign In</a>
+            <a href="http://localhost:63342/pythonProject1/Login%20Page.html?_ijt=bi8b5p34ruid1lac4k3st8o36p" class="signup-btn">Sign Up</a>
+        </div>
+        <div class="menu-toggle">☰</div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Transform Your Learning Experience</h1>
+        <p>AI-driven personalized courses, gamification, and real-time collaboration</p>
+        <a href="http://localhost:63342/pythonProject1/Login%20Page.html?_ijt=j8bf0kfv7jqm1so1fgurs5d84q" class="btn-primary">Start Learning Now</a>
+    </section>
+
+    <section class="courses" id="courses">
+        <h2 class="section-title">Featured Courses</h2>
+        <div class="course-grid">
+            <!-- Add more courses with images -->
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://vrgtechtraining.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-09-20-at-13.01.53_ed393421.jpg" alt="UI/UX Design">
+                </div>
+                <div class="course-content">
+                    <span class="course-category">Design</span>
+                    <h3><a href="https://www.youtube.com/watch?v=_MFBAtFLNKc&list=PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F"> Advanced UI/UX Design</a></h3>
+                    <p>Master Figma, Adobe XD, and user research techniques through real-world projects.</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★☆ (4.5)</span>
+                        <span>🕒 32 Hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://miro.medium.com/v2/resize:fit:960/1*0WDqECSWiU6N41iBQc3KPQ.png" alt="Web Development">
+                </div>
+                <div class="course-content">
+                    <span class="course-category">Development</span>
+                    <h3><a href="https://www.youtube.com/playlist?list=PLDzeHZWIZsTo0wSBcg4-NMIbC0L8evLrD"> Web Development</a></h3>
+                    <p>Master front-end and back-end technologies including React, Node.js, and databases.</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★☆ (4.6)</span>
+                        <span>🕒 60 Hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnUxrGmbyvYdbMtXPQgP9QrWSJ4QhjeixNA&s" alt="Data Science">
+                </div>
+                <div class="course-content">
+                    <span class="course-category">Data Science</span>
+                    <h3><a href="https://www.youtube.com/playlist?list=PLEiEAq2VkUUIEQ7ENKU5Gv0HpRDtOphC6"> Data science </a></h3>
+                    <p>Learn Python, Machine Learning, and AI-driven data analysis techniques.</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★★ (4.9)</span>
+                        <span>🕒 50 Hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://5.imimg.com/data5/SELLER/Default/2021/9/XM/YT/PK/83343488/artificial-intelligence-and-machine-learning-training.jpeg" alt="Artificial Intelligence">
+                </div>
+                <div class="course-content">
+                    <span class="course-category">AI & Machine Learning</span>
+                    <h3><a href="https://www.youtube.com/playlist?list=PLEiEAq2VkUULyr_ftxpHB6DumOq1Zz2hq">AI and Machince Learning</a></h3>
+                    <p>Learn neural networks, deep learning, and AI model deployment with TensorFlow.</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★★ (4.9)</span>
+                        <span>🕒 65 Hours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose Knowledge Core</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>AI-Powered Learning</h3>
+                <p>Our adaptive learning system analyzes your progress and customizes content to match your learning style.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Gamified Experience</h3>
+                <p>Earn badges, points, and certificates while competing on leaderboards to stay motivated.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Collaborative Learning</h3>
+                <p>Join study groups, participate in discussions, and get feedback from peers and instructors.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Industry Certificates</h3>
+                <p>Earn recognized certifications that demonstrate your skills to employers worldwide.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Students Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVyc29ufGVufDB8fDB8fHww" alt="Sarah Johnson">
+                <h3>Sarah Johnson</h3>
+                <p class="rating">★★★★★</p>
+                <p>"The AI-powered recommendations helped me focus on areas where I needed improvement. I landed my dream job after completing just two courses!"</p>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="https://media.istockphoto.com/id/2006436002/video/happy-confident-and-portrait-of-indian-man-in-office-with-creative-professional-at-tech.jpg?s=640x640&k=20&c=vcKAWd0sGJpV3xR0AK1RCM7zTEpFUcBhQEXbNvN1M78=" alt="Michael Chen">
+                <h3>Michael Chen</h3>
+                <p class="rating">★★★★★</p>
+                <p>"The interactive projects gave me real-world experience. Knowledge Core transformed my career path completely."</p>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="https://www.timeshighereducation.com/sites/default/files/elena_rodriguez-falcon_-_nmite.jpg" alt="Elena Rodriguez">
+                <h3>Elena Rodriguez</h3>
+                <p class="rating">★★★★☆</p>
+                <p>"The community aspect of Knowledge Core sets it apart. I connected with industry professionals who mentored me along the way."</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog" id="blog">
+        <h2 class="section-title">Latest From Our Blog</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="https://www.digiexam.com/hs-fs/hubfs/Digiexam_AI%20in%20education_Illustration_v1.2.png?width=1920&name=Digiexam_AI%20in%20education_Illustration_v1.2.png" alt="AI in Education">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">AI & Education</span>
+                    <h3><a href="https://vlinkinfo.com/blog/ai-in-education-industry/">How AI is Transforming the Learning Experience</a></h3>
+                    <p>Discover the latest innovations in AI-driven personalized learning paths and adaptive content.</p>
+                    <div class="blog-meta">
+                        <span>📅 Mar 15, 2025</span>
+                        <span>🕒 5 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="https://d163l8u5jh2dv2.cloudfront.net/wp-content/uploads/2024/06/Blog-Top-5-skills-that-employers-will-look-for-in-the-future-Banner.webp" alt="Career Growth">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Career</span>
+                    <h3><a href="https://www.weforum.org/stories/2020/10/top-10-work-skills-of-tomorrow-how-long-it-takes-to-learn-them/">Top Skills Employers Will Look for in 2026</a></h3>
+                    <p>Stay ahead of the curve with insights into the most in-demand skills for the future job market.</p>
+                    <div class="blog-meta">
+                        <span>📅 Feb 28, 2025</span>
+                        <span>🕒 7 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDnAKGN_wDJPYto-XGvXCSLbBPpyN2Y1otdg&s" alt="Cloud Computing">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Tech Trends</span>
+                    <h3><a href="https://appinventiv.com/blog/serverless-architecture">Why Businesses Are Moving to Serverless Architecture</a></h3>
+                    <p>Understand how serverless computing is shaping the future of cloud-based applications.</p>
+                    <div class="blog-meta">
+                        <span>📅 Jan 18, 2025</span>
+                        <span>🕒 6 min read</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-section">
+            <h3>Knowledge Core</h3>
+            <p>Transforming the way the world learns with AI-powered, personalized education for everyone.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="http://localhost:63342/pythonProject1/support%20page.html?_ijt=mj6s8hihqarubdl8si2oecmk17">FAQs</a></li>
+                    <li><a href="http://localhost:63342/pythonProject1/Knowlege%20gate.html?_ijt=sc7jbgjhjvti78e3vre9ttdjt9">Knowledge Base</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section newsletter">
+            <h3>Stay Updated</h3>
+            <p>Subscribe to our newsletter for the latest courses and learning tips.</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button>Subscribe</button>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2025 Knowledge Core. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const authButtons = document.querySelector('.auth-buttons');
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                authButtons.classList.toggle('active');
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

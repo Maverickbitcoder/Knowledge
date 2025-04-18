@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base | Knowledge Core</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Variables */
+        :root {
+            --primary: #2A5C82;
+            --primary-gradient: linear-gradient(135deg, #2A5C82 0%, #3A86B8 100%);
+            --primary-light: #3A86B8;
+            --secondary: #f5f7fa;
+            --accent: #FF6B6B;
+            --success: #2ed573;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s ease;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            background: var(--primary-gradient);
+            color: var(--white);
+            padding: 8rem 5% 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="%23ffffff22" fill="none" stroke-width="15"/></svg>');
+            opacity: 0.2;
+            background-size: 400px 400px;
+            animation: pattern-float 60s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        /* Knowledge Base Search */
+        .kb-search-container {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .kb-search-banner {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .kb-search-banner h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .kb-search-form {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .kb-search-form input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .kb-search-form input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 5px rgba(42, 92, 130, 0.1);
+        }
+
+        .kb-search-form i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.3rem;
+        }
+
+        .kb-categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .kb-category-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .kb-category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kb-category-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(42, 92, 130, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .kb-category-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+        }
+
+        .kb-category-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .kb-category-card ul {
+            list-style: none;
+            margin-top: auto;
+        }
+
+        .kb-category-card ul li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .kb-category-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-light);
+        }
+
+        .kb-category-card .view-all {
+            text-align: right;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Article List Styles */
+        .kb-article-list {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .kb-article-list h3 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .kb-article-list h3 i {
+            margin-right: 0.8rem;
+        }
+
+        .kb-article-item {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .kb-article-item:hover {
+            background: rgba(42, 92, 130, 0.05);
+            padding-left: 0.5rem;
+        }
+
+        .kb-article-item:last-child {
+            border-bottom: none;
+        }
+
+        .kb-article-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .kb-article-item a:hover {
+            color: var(--primary);
+        }
+
+        .kb-article-item a i {
+            color: var(--primary-light);
+            font-size: 0.9rem;
+        }
+
+        .kb-article-meta {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .article-category {
+            background: rgba(42, 92, 130, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+        }
+
+        .featured-articles {
+            margin-bottom: 4rem;
+        }
+
+        .featured-articles h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .featured-article {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .featured-article:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .featured-article img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 1.5rem;
+        }
+
+        .featured-content h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .featured-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .featured-meta .author {
+            display: flex;
+            align-items: center;
+        }
+
+        .featured-meta .author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 0.8rem;
+            object-fit: cover;
+        }
+
+        /* Latest Updates */
+        .latest-updates {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+        }
+
+        .latest-updates h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .update-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .update-item:last-child {
+            border-bottom: none;
+        }
+
+        .update-date {
+            min-width: 100px;
+            text-align: center;
+            background: rgba(42, 92, 130, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            height: fit-content;
+        }
+
+        .update-date .day {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .update-date .month {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .update-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .update-content p {
+            color: var(--text-light);
+        }
+
+        /* FAQ Section */
+        .kb-faq {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .kb-faq h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .kb-faq-item {
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kb-faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .kb-faq-question:hover {
+            color: var(--primary);
+        }
+
+        .kb-faq-question i {
+            transition: var(--transition);
+        }
+
+        .kb-faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+            color: var(--text-light);
+        }
+
+        .kb-faq-item.active .kb-faq-question {
+            color: var(--primary);
+        }
+
+        .kb-faq-item.active .kb-faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .kb-faq-item.active .kb-faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 1000px;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .contact-box h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .contact-box p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-option {
+            background: rgba(42, 92, 130, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            transition: var(--transition);
+        }
+
+        .contact-option:hover {
+            background: rgba(42, 92, 130, 0.1);
+        }
+
+        .contact-option i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-option h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-option p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-option a {
+            font-weight: 600;
+        }
+
+        /* Top Contributors */
+        .top-contributors {
+            margin-bottom: 4rem;
+        }
+
+        .top-contributors h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .contributors-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contributor-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            width: 200px;
+            transition: var(--transition);
+        }
+
+        .contributor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contributor-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contributor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .contributor-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contributor-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .contributor-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .contributor-stats span {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contributor-stats .count {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            gap: 0.5rem;
+        }
+
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--primary-gradient);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pattern-float {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .support-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .kb-categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .support-options {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .contact-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-option {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">K</div>
+            <div class="logo-text">Knowledge Core</div>
+        </div>
+        <div class="nav-links">
+            <a href="http://localhost:63342/pythonProject1/Base%20file.html?_ijt=bd2lhhnc06fvm22jisthbgegfv">Home</a>
+            <a href="http://localhost:63342/pythonProject1/support%20page.html?_ijt=ljnp5tvfuforg6g7v49gmldc77">Support</a>
+            <a href="http://localhost:63342/pythonProject1/Login%20Page.html?_ijt=ljnp5tvfuforg6g7v49gmldc77">Login</a>
+        </div>
+        <div class="menu-toggle">☰</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Knowledge Base</h1>
+            <p>Find answers, tutorials, and solutions to help you get the most out of Knowledge Core</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Search Section -->
+        <div class="kb-search-container">
+            <div class="kb-search-banner">
+                <h2>How can we help you today?</h2>
+                <div class="kb-search-form">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search the knowledge base...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="kb-categories-grid">
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Account & Profile</h3>
+                <p>Learn how to manage your account settings, profile, and security.</p>
+
+                <div class="view-all">
+                    <a href="#/category/account">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Billing & Subscriptions</h3>
+                <p>Information about payment methods, plans, and billing policies.</p>
+                <ul>
+                    <li><a href="#/article/payment-methods">Payment Methods</a></li>
+                    <li><a href="#/article/subscription-plans">Subscription Plans</a></li>
+                    <li><a href="#/article/refund-policy">Refund Policy</a></li>
+                </ul>
+                <div class="view-all">
+                    <a href="#/category/billing">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Courses & Learning</h3>
+                <p>Everything about enrolling, navigating, and completing courses.</p>
+                <ul>
+                    <li><a href="#/article/enrolling-in-courses">Enrolling in Courses</a></li>
+                    <li><a href="#/article/course-navigation">Course Navigation</a></li>
+                    <li><a href="#/article/certificates">Certificates & Achievements</a></li>
+                </ul>
+                <div class="view-all">
+                    <a href="#/category/courses">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Troubleshooting</h3>
+                <p>Solutions for common issues and technical problems.</p>
+                <ul>
+                    <li><a href="#/article/video-playback-issues">Video Playback Issues</a></li>
+                    <li><a href="#/article/login-problems">Login Problems</a></li>
+                    <li><a href="#/article/browser-compatibility">Browser Compatibility</a></li>
+                </ul>
+                <div class="view-all">
+                    <a href="#/category/troubleshooting">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile App</h3>
+                <p>Guides for using Knowledge Core on iOS and Android devices.</p>
+                <ul>
+                    <li><a href="#/article/mobile-app-installation">Installing the Mobile App</a></li>
+                    <li><a href="#/article/offline-learning">Offline Learning</a></li>
+                    <li><a href="#/article/mobile-notifications">Push Notifications</a></li>
+                </ul>
+                <div class="view-all">
+                    <a href="#/category/mobile">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="kb-category-card">
+                <div class="kb-category-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>For Instructors</h3>
+                <p>Resources for course creators and educators on the platform.</p>
+                <ul>
+                    <li><a href="#/article/becoming-an-instructor">Becoming an Instructor</a></li>
+                    <li><a href="#/article/creating-courses">Creating Engaging Courses</a></li>
+                    <li><a href="#/article/instructor-analytics">Instructor Analytics</a></li>
+                </ul>
+                <div class="view-all">
+                    <a href="#/category/instructors">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Articles -->
+        <div class="featured-articles">
+            <h2>Featured Articles</h2>
+            <div class="featured-grid">
+
+                <div class="featured-article">
+                    <img src="https://mindwerx.com/wp-content/uploads/advanced-learning-techniques-australia.png" alt="Advanced Learning Techniques">
+                    <div class="featured-content">
+                        <h3><a href="https://www.researchgate.net/publication/354418623_Advanced_Learning">Advanced Learning Techniques</a></h3>
+                        <p>Strategies to enhance your learning experience and retain more information.</p>
+                        <div class="featured-meta">
+                            <div class="date">Mar 22, 2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="featured-article">
+                    <img src="data:image/jpeg;base64,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" alt="Mastering Interactive Quizzes">
+                    <div class="featured-content">
+                        <h3><a href="https://www.researchgate.net/publication/240968615_The_uselessness_of_online_quizzes_for_achieving_student_learning">Mastering Interactive Quizzes</a></h3>
+                        <p>How to approach and excel in the platform's adaptive assessments.</p>
+                        <div class="featured-meta">
+                            <div class="date">Mar 15, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest Updates -->
+        <div class="latest-updates">
+            <h2>Latest Updates & Announcements</h2>
+
+            <div class="update-item">
+                <div class="update-date">
+                    <div class="day">05</div>
+                    <div class="month">APR</div>
+                </div>
+                <div class="update-content">
+                    <h3>New Mobile App Features</h3>
+                    <p>We've added offline downloads, improved video playback, and enhanced the mobile quiz experience. Update your app to access these features.</p>
+                </div>
+            </div>
+
+            <div class="update-item">
+                <div class="update-date">
+                    <div class="day">28</div>
+                    <div class="month">MAR</div>
+                </div>
+                <div class="update-content">
+                    <h3>Platform-Wide Performance Improvements</h3>
+                    <p>We've optimized our servers and improved page load times across the platform. You should notice a smoother, faster experience.</p>
+                </div>
+            </div>
+
+            <div class="update-item">
+                <div class="update-date">
+                    <div class="day">15</div>
+                    <div class="month">MAR</div>
+                </div>
+                <div class="update-content">
+                    <h3>New AI Learning Assistant</h3>
+                    <p>Introducing our AI-powered learning assistant that provides personalized recommendations and answers questions in real-time.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Articles -->
+        <div class="kb-article-list">
+            <h3><i class="fas fa-star"></i> Most Popular Articles</h3>
+
+            <div class="kb-article-item">
+                <a href="#/article/reset-password">
+                    <span>How to Reset Your Password</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="kb-article-meta">
+                    <span class="article-category">Account</span>
+                    <span>Updated: Apr 3, 2025</span>
+                </div>
+            </div>
+
+            <div class="kb-article-item">
+                <a href="#/article/course-completion">
+                    <span>Understanding Course Completion Requirements</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="kb-article-meta">
+                    <span class="article-category">Courses</span>
+                    <span>Updated: Mar 30, 2025</span>
+                </div>
+            </div>
+
+            <div class="kb-article-item">
+                <a href="#/article/offline-materials">
+                    <span>Downloading Course Materials for Offline Access</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="kb-article-meta">
+                    <span class="article-category">Mobile</span>
+                    <span>Updated: Mar 25, 2025</span>
+                </div>
+            </div>
+
+            <div class="kb-article-item">
+                <a href="#/article/two-factor">
+                    <span>Setting Up Two-Factor Authentication</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="kb-article-meta">
+                    <span class="article-category">Security</span>
+                    <span>Updated: Mar 18, 2025</span>
+                </div>
+            </div>
+
+            <div class="kb-article-item">
+                <a href="#/article/transfer-courses">
+                    <span>Transferring Courses Between Accounts</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="kb-article-meta">
+                    <span class="article-category">Billing</span>
+                    <span>Updated: Mar 10, 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="kb-faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="kb-faq-item">
+                <div class="kb-faq-question">
+                    How do I reset my password?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="kb-faq-answer">
+                    <p>To reset your password, click the "Forgot Password" link on the login page. Enter your email address, and we'll send you a password reset link. Click the link in the email and follow the instructions to create a new password. For security reasons, password reset links expire after 24 hours.</p>
+                </div>
+            </div>
+
+            <div class="kb-faq-item">
+                <div class="kb-faq-question">
+                    Can I download courses for offline viewing?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="kb-faq-answer">
+                    <p>Yes, you can download course materials for offline viewing through our mobile app. Open the course you want to download, tap the download icon next to each lecture or section you wish to save offline. Downloaded content will be available in the "Downloads" section of the app. Note that downloads expire after 30 days if you don't connect to the internet.</p>
+                </div>
+            </div>
+
+            <div class="kb-faq-item">
+                <div class="kb-faq-question">
+                    How do I get a certificate after completing a course?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="kb-faq-answer">
+                    <p>Certificates are automatically issued when you complete all required components of a course (including quizzes, assignments, and projects). Once you've met all requirements, your certificate will appear in the "Certificates" section of your profile. You can download it as a PDF or share it directly to LinkedIn from there. Some advanced courses may require passing a final exam with a minimum score.</p>
+                </div>
+            </div>
+
+            <div class="kb-faq-item">
+                <div class="kb-faq-question">
+                    What payment methods do you accept?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="kb-faq-answer">
+                    <p>We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, and Apple Pay. In select regions, we also support local payment methods such as bank transfers. For corporate or team subscriptions, we offer invoice-based payments. All transactions are securely processed and encrypted.</p>
+                </div>
+            </div>
+
+            <div class="kb-faq-item">
+                <div class="kb-faq-question">
+                    Can I switch between subscription plans?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="kb-faq-answer">
+                    <p>Yes, you can upgrade or downgrade your subscription at any time from your account settings. When upgrading, the new plan takes effect immediately, and you'll be charged a prorated amount for the remainder of your billing cycle. When downgrading, the changes will take effect at the end of your current billing period. There are no penalties for changing plans.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Box -->
+        <div class="contact-box">
+            <h2>Couldn't Find What You Were Looking For?</h2>
+            <p>Our support team is here to help with any questions you may have.</p>
+
+            <div class="contact-options">
+                <div class="contact-option">
+                    <i class="fas fa-comments"></i>
+                    <h3>Live Chat</h3>
+                    <p>Chat with our support team in real-time</p>
+                    <a href="/support#live-chat">Start Chat</a>
+                </div>
+
+                <div class="contact-option">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Support</h3>
+                    <p>Get a response within 24 hours</p>
+                    <a href="/support#contact">Contact Us</a>
+                </div>
+
+                <div class="contact-option">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Phone Support</h3>
+                    <p>Available Mon-Fri, 9am-5pm EST</p>
+                    <a href="tel:+18001234567">+1 (800) 123-4567</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/support">Support</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+
+            <div class="copyright">
+                &copy; 2025 Knowledge Core. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            // FAQ Accordions
+            const faqQuestions = document.querySelectorAll('.kb-faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+
+            // Back to Top Button
+            const backToTopBtn = document.querySelector('.back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Search Functionality (Basic)
+            const searchInput = document.querySelector('.kb-search-form input');
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    // In a real application, this would perform a search
+                    alert('Search functionality would trigger here for: ' + this.value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
